@@ -16,11 +16,14 @@ public class Player : MonoBehaviour
     private float _speed = 5.5f;
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private float _fireRate = 0.25f;
+    [SerializeField]
+    private float _nextFire = 0.0f;
+    private float _canFire = -1f;
     // Start is called before the first frame update
     void Start()
     {
-        // take the current position and assign it to charcter
-        // take current position = new position [0, 0, 0]
         transform.position = new Vector3(0, 0, 0);
     }
 
@@ -30,8 +33,6 @@ public class Player : MonoBehaviour
         CalculateMovement();
         HandleLasers();
 
-        // if I hit the space key
-        // I spawn an object
     }
 
     void CalculateMovement()
@@ -60,10 +61,12 @@ public class Player : MonoBehaviour
         }
     }
     void HandleLasers()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+    {   
+
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-            Instantiate(_laserPrefab, transform.position, UnityEngine.Quaternion.identity);
+            _canFire = Time.time + _fireRate;
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
         }
     }
 }
