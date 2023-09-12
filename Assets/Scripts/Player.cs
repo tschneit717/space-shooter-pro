@@ -1,7 +1,10 @@
+using System.Numerics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
+using Quaternion = UnityEngine.Quaternion;
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +14,8 @@ public class Player : MonoBehaviour
     // data type (int, float, bool, string)
     [SerializeField]
     private float _speed = 5.5f;
+    [SerializeField]
+    private GameObject _laserPrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +28,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
+        HandleLasers();
+
+        // if I hit the space key
+        // I spawn an object
     }
 
     void CalculateMovement()
@@ -48,6 +57,13 @@ public class Player : MonoBehaviour
         else if (transform.position.x < leftBound)
         {
             transform.position = new Vector3(rightBound, transform.position.y, 0);
+        }
+    }
+    void HandleLasers()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(_laserPrefab, transform.position, UnityEngine.Quaternion.identity);
         }
     }
 }
