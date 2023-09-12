@@ -18,8 +18,6 @@ public class Player : MonoBehaviour
     private GameObject _laserPrefab;
     [SerializeField]
     private float _fireRate = 0.25f;
-    [SerializeField]
-    private float _nextFire = 0.0f;
     private float _canFire = -1f;
     // Start is called before the first frame update
     void Start()
